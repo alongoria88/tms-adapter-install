@@ -19,7 +19,7 @@ REPO="alongoria88/happy-robot-fde-challenge"
 REF="${TMS_ADAPTER_REF:-main}"            # branch or tag to deploy
 DIR="${TMS_ADAPTER_DIR:-$HOME/tms-adapter}"
 # The "TMS Adapter Installer" GitHub App. A client ID is public by design, not a secret.
-CLIENT_ID="${TMS_ADAPTER_CLIENT_ID:-REPLACE_WITH_CLIENT_ID}"
+CLIENT_ID="${TMS_ADAPTER_CLIENT_ID:-Iv23liTjwO6QqXqJW5SN}"
 
 ok()   { printf '  \033[32m✓\033[0m %s\n' "$1"; }
 fail() { printf '  \033[31m✗\033[0m %s\n    → %s\n' "$1" "$2" >&2; exit 1; }
