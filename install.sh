@@ -36,8 +36,6 @@ main() {
   for tool in git curl python3; do
     command -v "$tool" >/dev/null || fail "$tool is not installed" "run this from your cloud's browser shell, which has it"
   done
-  # The script itself arrives on stdin, so the deploy's questions must read from the terminal.
-  [[ -r /dev/tty ]] || fail "no terminal to ask questions on" "run this in an interactive shell"
 
   echo "TMS adapter: deploy to $cloud"
   local token="${GITHUB_TOKEN:-}"
@@ -69,7 +67,12 @@ main() {
   echo
 
   cd "$DIR"
-  exec ./deploy.sh "$cloud" "$@" </dev/tty
+  # The script itself arrives on stdin, so the deploy's questions must read from the
+  # terminal. Without one (CI), deploy.sh runs from saved settings or says what's missing.
+  if (: </dev/tty) 2>/dev/null; then
+    exec ./deploy.sh "$cloud" "$@" </dev/tty
+  fi
+  exec ./deploy.sh "$cloud" "$@" </dev/null
 }
 
 # GitHub's device sign-in: show a code, the user approves it in their browser, we get a token.
